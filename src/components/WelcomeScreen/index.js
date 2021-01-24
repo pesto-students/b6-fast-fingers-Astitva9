@@ -30,6 +30,7 @@ const WelcomeScreen = ({submitUserData, onchange, formData}) => {
                                 name="userName"
                                 value={userName}
                                 onChange={onchange}
+                                required={true}
                             />
                      
                         </Form.Group>
@@ -40,10 +41,11 @@ const WelcomeScreen = ({submitUserData, onchange, formData}) => {
                                 name="difficultyLevel"
                                 value={difficultyLevel}
                                 onChange={onchange}
+                                required={true}
                             >
-                                <option value="1">Easy</option>
-                                <option value="2">Medium</option>
-                                <option value="3">Hard</option>
+                                <option value="Easy">Easy</option>
+                                <option value="Medium">Medium</option>
+                                <option value="Hard">Hard</option>
                             </Form.Control>
                         </Form.Group>
                        

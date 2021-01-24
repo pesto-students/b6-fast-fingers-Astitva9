@@ -2,16 +2,17 @@ import React,{useState, useEffect} from 'react';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import WelcomeScreen from './components/WelcomeScreen'; 
-import {Container} from 'react-bootstrap';
+import GameScreen from './components/GameScreen'; 
+
 
 function App() {
 
   const [formData, setFormData] = useState({
     userName:'',
-    difficultyLevel: "1"
+    difficultyLevel: "Easy"
   });
 
-  const [gameStarted, setGameStarted] = useState(false)
+  const [gameStarted, setGameStarted] = useState(true)
 
   const onchange = (event) => {
       setFormData({ ...formData, [event.target.name]: event.target.value });
@@ -19,25 +20,43 @@ function App() {
 
   const submitUserData = (event) =>{
       event.preventDefault();
-      localStorage.setItem('userName', formData.userName);
-      setGameStarted(true);
+
+      if(formData.userName && formData.difficultyLevel){
+        localStorage.setItem('userName', formData.userName);
+        localStorage.setItem('difficultyLevel', formData.difficultyLevel);
+        setGameStarted(true);
+      }else{
+        
+      }
+      
   }
 
   useEffect(() => {
+    console.log(localStorage.userName);
     if(localStorage.userName){
-      setFormData({ userName : localStorage.userName });
+
+      setFormData({ 
+        userName : localStorage.userName,
+        difficultyLevel : (localStorage.difficultyLevel)? localStorage.difficultyLevel : 'Easy'
+      });
+      
     }
   },[])
+
+  
 
   let ScreenComponent = '';
 
   if(!gameStarted)
   ScreenComponent = <WelcomeScreen onchange={onchange} submitUserData={submitUserData} formData={formData}/>
+  else
+  ScreenComponent = <GameScreen/>
 
   return (
-    <Container>
+    <div>
       {ScreenComponent}
-    </Container>
+      
+    </div> 
   );
 }
 
