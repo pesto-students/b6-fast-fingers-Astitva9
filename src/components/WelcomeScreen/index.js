@@ -1,7 +1,10 @@
 import React from 'react';
 import { Row, Col, Form} from 'react-bootstrap';
 import './index.css'
-const WelcomeScreen = () => {
+const WelcomeScreen = ({submitUserData, onchange, formData}) => {
+
+    const {userName, difficultyLevel} = formData;
+
     return (
         <div>
             <Row className="welcome-row">
@@ -17,22 +20,35 @@ const WelcomeScreen = () => {
             <Row className="welcome-form-row">
                 
                 <Col className="welcome-form-col">
-                    <Form>
+                    <Form onSubmit={submitUserData}>
                         <Form.Group controlId="formBasicEmail">
                     
-                            <Form.Control type="text" placeholder="Type Your Name" className="name-field"/>
+                            <Form.Control 
+                                type="text" 
+                                placeholder="Type Your Name" 
+                                className="name-field"
+                                name="userName"
+                                value={userName}
+                                onChange={onchange}
+                            />
                      
                         </Form.Group>
                         <Form.Group controlId="exampleForm.ControlSelect1"> 
-                            <Form.Control as="select" className="select-field">
-                                <option>Easy</option>
-                                <option>Medium</option>
-                                <option>Hard</option>
+                            <Form.Control 
+                                as="select" 
+                                className="select-field" 
+                                name="difficultyLevel"
+                                value={difficultyLevel}
+                                onChange={onchange}
+                            >
+                                <option value="1">Easy</option>
+                                <option value="2">Medium</option>
+                                <option value="3">Hard</option>
                             </Form.Control>
                         </Form.Group>
                        
-                        <button class="start-game-btn" type="submit">
-                            <img class="icon-play" src={require('../../assets/images/play-btn-FF.png')} alt="Start Icon" className="play-icon" />START GAME
+                        <button className="start-game-btn" type="submit">
+                            <img src={require('../../assets/images/play-btn-FF.png')} alt="Start Icon" className="play-icon" />START GAME
                         </button>
                     </Form>
                 </Col>
