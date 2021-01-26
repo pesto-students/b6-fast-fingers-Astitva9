@@ -19,11 +19,11 @@ const renderTime = (dimension, time) => {
 
 const getTimeSeconds = (time) => (minuteSeconds - time) | 0;
 
-const CountDownTimer= () => {
-    const stratTime = Date.now() / 1000; // use UNIX timestamp in seconds
-    const endTime = stratTime + 243248; // use UNIX timestamp in seconds
+const CountDownTimer= ({startGame}) => {
+    const startTime = Date.now() / 1000; // use UNIX timestamp in seconds
+    const endTime = startTime + 243248; // use UNIX timestamp in seconds
   
-    const remainingTime = endTime - stratTime;
+    const remainingTime = endTime - startTime;
   
     return (
       <div className="timer-block">
@@ -32,9 +32,12 @@ const CountDownTimer= () => {
           colors={[["#ff5155"]]}
           duration={minuteSeconds}
           initialRemainingTime={remainingTime % minuteSeconds}
-          onComplete={(totalElapsedTime) => [
+          onComplete={(totalElapsedTime) => {
+            startGame(false);
+            return [
             remainingTime - totalElapsedTime > 0
-          ]}
+          ];
+        }}
         >
           {({ elapsedTime }) =>
             renderTime("seconds", getTimeSeconds(elapsedTime))
