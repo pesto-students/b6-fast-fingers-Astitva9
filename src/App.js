@@ -16,9 +16,20 @@ function App() {
 
   const [gameStarted, setGameStarted] = useState(false)
 
+  const [difficultyFactor, setDifficultyFactor] = useState(1);
+
+  const [timerValue, setTimerValue] = useState(0)
+
+
+
+  const [gameWord, setGameWord] = useState('PESTO')
+
+
   const onchange = (event) => {
       setFormData({ ...formData, [event.target.name]: event.target.value });
   }
+
+  const [inputValue, setInputValue] = useState('');
 
   const submitUserData = (event) =>{
       event.preventDefault();
@@ -33,7 +44,7 @@ function App() {
       
   }
 
-  useEffect(() => {
+  useEffect( () => {
     // console.log(localStorage.userName);
     if(localStorage.userName){
 
@@ -56,8 +67,61 @@ function App() {
           _hardWords.push(word);
         }
       }
+
+      const generateWordDifficultyWise = async () => {
+        let newWord = null;
+        let timeForWord = 0;
+        if(localStorage.difficultyLevel === 'Medium'){
+          setDifficultyFactor(1.5);
+          newWord = await getNewWord(1.5,_mediumWords);
+          timeForWord = Math.round(newWord.length / 1.5);
+        }else if(localStorage.difficultyLevel === 'Hard'){
+          setDifficultyFactor(2);
+          newWord = await getNewWord(2,_hardWords);
+          timeForWord = Math.round(newWord.length / 2);
+        }else{
+          setDifficultyFactor(1);
+          newWord = await getNewWord(1,_easyWords);
+          timeForWord = Math.round(newWord.length / 1);
+        }
+
+        
+        let maxTimeForWord = Math.max(timeForWord, 2);
+
+        console.log({maxTimeForWord});
+
+        setTimerValue(maxTimeForWord);
+       
+        console.log({newWord});
+        setGameWord(newWord);
+      }
+           
+      generateWordDifficultyWise();
+      
     }
   },[])
+
+  
+
+  const getNewWord = async(_difficultyFactor,wordArray) => {
+    if (_difficultyFactor >= 1.5 && _difficultyFactor < 2) {
+      const random = Math.round(Math.random() * (wordArray.length - 1));
+      return wordArray[random].toUpperCase();
+    }
+    if (_difficultyFactor < 1.5) {
+      const random = Math.round(Math.random() * (wordArray.length - 1));
+      return wordArray[random].toUpperCase();
+    }
+    const random = Math.round(Math.random() * (wordArray.length - 1));
+    return wordArray[random].toUpperCase();
+  };
+
+  const onWordChange = (e) =>{
+    if(e.target.value.toUpperCase() === gameWord){
+      console.log("Word matched");
+    }
+    setInputValue(e.target.value);
+  }
 
   
 
@@ -66,7 +130,13 @@ function App() {
   if(!gameStarted)
   ScreenComponent = <WelcomeScreen onchange={onchange} submitUserData={submitUserData} formData={formData}/>
   else
-  ScreenComponent = <GameScreen mainGameStarted={setGameStarted}/>
+  ScreenComponent = <GameScreen 
+                      mainGameStarted={setGameStarted}
+                      gameWord={gameWord}
+                      onWordChange={onWordChange}
+                      inputValue={inputValue}
+                      timerValue={timerValue}
+                    />
 
   return (
     <Container fluid>

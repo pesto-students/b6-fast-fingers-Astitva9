@@ -5,7 +5,7 @@ import GameModule from './GameModule';
 import ExitModule from './ExitModule';
 
 import './index.css'
-const GameScreen = ({mainGameStarted}) => {
+const GameScreen = ({mainGameStarted, gameWord, onWordChange, inputValue, timerValue}) => {
 
     
     let mainModule = '';
@@ -13,7 +13,13 @@ const GameScreen = ({mainGameStarted}) => {
     const [singleGameStarted, setSingleGameStarted] = useState(true)
 
     if(singleGameStarted)
-        mainModule = <GameModule startGame={setSingleGameStarted}/>;
+        mainModule = <GameModule 
+                        startgame={setSingleGameStarted} 
+                        gameWord={gameWord}
+                        onWordChange={onWordChange}
+                        inputValue={inputValue}
+                        timervalue={timerValue}
+                    />;
     else
         mainModule = <ExitModule startGame={setSingleGameStarted}/>;
    
