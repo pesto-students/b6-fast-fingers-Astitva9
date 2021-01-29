@@ -44,6 +44,56 @@ function App() {
       
   }
 
+  const resetGame = async () => {
+    const [ _easyWords, _mediumWords, _hardWords] = getWordFromDictionary();
+    setInputValue('');
+    let newWord = null;
+    let timeForWord = 0;
+    if(localStorage.difficultyLevel === 'Medium'){
+      newWord = await getNewWord(difficultyFactor,_mediumWords);
+      timeForWord = Math.round(newWord.length / difficultyFactor);
+    }else if(localStorage.difficultyLevel === 'Hard'){
+
+      newWord = await getNewWord(difficultyFactor,_hardWords);
+      timeForWord = Math.round(newWord.length / difficultyFactor);
+    }else{
+
+      newWord = await getNewWord(difficultyFactor,_easyWords);
+      timeForWord = Math.round(newWord.length / difficultyFactor);
+    }
+    let maxTimeForWord = Math.max(timeForWord, 2);
+
+    console.log({maxTimeForWord});
+
+    setTimerValue(maxTimeForWord);
+
+    console.log({newWord});
+    setGameWord(newWord);
+  }
+
+  const getWordFromDictionary = () =>{
+    const _easyWords = [];
+    const _mediumWords = [];
+    const _hardWords = [];
+
+    for (let word of data) {
+      if (word.length <= 4) {
+        _easyWords.push(word);
+      } else if (word.length <= 8) {
+        _mediumWords.push(word);
+      } else {
+        _hardWords.push(word);
+      }
+    }
+
+    return [
+      _easyWords,
+      _mediumWords,
+      _hardWords
+    ]
+  }
+ 
+
   useEffect( () => {
     // console.log(localStorage.userName);
     if(localStorage.userName){
@@ -53,20 +103,8 @@ function App() {
         difficultyLevel : (localStorage.difficultyLevel)? localStorage.difficultyLevel : 'Easy'
       });
 
-
-      const _easyWords = [];
-      const _mediumWords = [];
-      const _hardWords = [];
-  
-      for (let word of data) {
-        if (word.length <= 4) {
-          _easyWords.push(word);
-        } else if (word.length <= 8) {
-          _mediumWords.push(word);
-        } else {
-          _hardWords.push(word);
-        }
-      }
+      
+    const [ _easyWords, _mediumWords, _hardWords] = getWordFromDictionary();
 
       const generateWordDifficultyWise = async () => {
         let newWord = null;
@@ -99,6 +137,11 @@ function App() {
       generateWordDifficultyWise();
       
     }
+    return () => {
+      
+     
+
+    }
   },[])
 
   
@@ -117,8 +160,10 @@ function App() {
   };
 
   const onWordChange = (e) =>{
+    e.persist();
     if(e.target.value.toUpperCase() === gameWord){
       console.log("Word matched");
+      //resetGame();
     }
     setInputValue(e.target.value);
   }
@@ -136,6 +181,7 @@ function App() {
                       onWordChange={onWordChange}
                       inputValue={inputValue}
                       timerValue={timerValue}
+                      resetGame={resetGame}
                     />
 
   return (

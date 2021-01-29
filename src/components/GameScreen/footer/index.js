@@ -1,9 +1,10 @@
 import React from 'react';
 import { Row, Col} from 'react-bootstrap';
 
-const Footer = ({mainGameStarted}) => {
+const Footer = ({mainGameStarted, resetGame}) => {
 
     const stopMainGame = () => {
+        resetGame();
         mainGameStarted(false);
     }
 

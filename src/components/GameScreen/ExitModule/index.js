@@ -2,9 +2,10 @@ import React from 'react';
 import { Row, Col} from 'react-bootstrap';
 import '../index.css';
 
-const ExitModule = ({startGame}) => {
+const ExitModule = ({startGame, resetGame}) => {
 
     const startNewGame = () => {
+        resetGame();
         startGame(true);
     }
 

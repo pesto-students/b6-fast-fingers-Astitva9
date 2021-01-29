@@ -5,7 +5,7 @@ import GameModule from './GameModule';
 import ExitModule from './ExitModule';
 
 import './index.css'
-const GameScreen = ({mainGameStarted, gameWord, onWordChange, inputValue, timerValue}) => {
+const GameScreen = ({mainGameStarted, gameWord, onWordChange, inputValue, timerValue, resetGame}) => {
 
     
     let mainModule = '';
@@ -21,14 +21,20 @@ const GameScreen = ({mainGameStarted, gameWord, onWordChange, inputValue, timerV
                         timervalue={timerValue}
                     />;
     else
-        mainModule = <ExitModule startGame={setSingleGameStarted}/>;
+        mainModule = <ExitModule 
+                        startGame={setSingleGameStarted}
+                        resetGame={resetGame}
+                    />;
    
     return (
 
         <div className="">
             <Header/>
             {mainModule}
-            <Footer mainGameStarted={mainGameStarted}/>
+            <Footer 
+                mainGameStarted={mainGameStarted}
+                resetGame={resetGame}
+            />
         </div>
 
     );
