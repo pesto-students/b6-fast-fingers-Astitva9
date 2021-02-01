@@ -10,7 +10,7 @@ import data from './data/dictionary.json';
 function App() {
 
   const [formData, setFormData] = useState({
-    userName:'',
+    userName:(localStorage.userName)?localStorage.userName:'',
     difficultyLevel: ""
   });
 
