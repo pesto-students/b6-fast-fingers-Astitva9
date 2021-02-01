@@ -27,7 +27,7 @@ const GameModule = ({startgame, gameWord, onWordChange, inputValue, timervalue, 
             }
             
             return (
-                <div className="score-div">
+                <div className="score-div" key={index}>
                     <div className="highest-heading">{ (isPersonalBest === true)? 'Personal Best':'' }</div>
                     <p className="white-heading">Game {index} : {formatTimeLeft(singleScore)}</p>
                 </div>

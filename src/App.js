@@ -11,7 +11,7 @@ function App() {
 
   const [formData, setFormData] = useState({
     userName:(localStorage.userName)?localStorage.userName:'',
-    difficultyLevel: ""
+    difficultyLevel: "Easy"
   });
 
   const [gameStarted, setGameStarted] = useState(false)

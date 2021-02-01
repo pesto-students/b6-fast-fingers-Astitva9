@@ -32,6 +32,8 @@ const WelcomeScreen = ({submitUserData, onchange, formData}) => {
                                 onChange={onchange}
                                 required={true}
                             />
+
+                            { (userName.trim() === '' ) ? (<p className="error-message">Please Fill Your Name</p>):''}
                      
                         </Form.Group>
                         <Form.Group controlId="exampleForm.ControlSelect1"> 
@@ -48,6 +50,7 @@ const WelcomeScreen = ({submitUserData, onchange, formData}) => {
                                 <option value="Medium">Medium</option>
                                 <option value="Hard">Hard</option>
                             </Form.Control>
+                            { (difficultyLevel.trim() === '' ) ? (<p className="error-message">Please Select Difficulty Level</p>):''}
                         </Form.Group>
                        
                         <button className="start-game-btn" type="submit">
