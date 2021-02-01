@@ -168,7 +168,7 @@ function App() {
   const onWordChange = (e) =>{
     e.persist();
     if(e.target.value.toUpperCase() === gameWord){
-      console.log("Word matched");
+      
       //Increase the difficulty factor by  0.01 on success
       const _difficultyFactor = difficultyFactor + 0.01;
 

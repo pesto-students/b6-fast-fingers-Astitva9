@@ -51,7 +51,7 @@ const CountDownTimer= ({
   
         if (timeLeft <= 0) {
           clearInterval(timerId.current);
-          // startgame(false);
+          startgame(false);
         }
         setCircleDasharray();
         getScore(timeLeft)
