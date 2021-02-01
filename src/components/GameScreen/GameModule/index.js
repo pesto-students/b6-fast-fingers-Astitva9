@@ -19,14 +19,13 @@ const GameModule = ({startgame, gameWord, onWordChange, inputValue, timervalue, 
     if(totalScoreArray.length>0){
       
         scorePanel = totalScoreArray.map((singleScore, index) =>{
-            console.log(Math.max(...totalScoreArray));
-            console.log({singleScore});
+            
             let isPersonalBest = false
             if(Math.max(...totalScoreArray) === singleScore){
                 isPersonalBest=true;
 
             }
-            console.log({isPersonalBest});
+            
             return (
                 <div className="score-div">
                     <div className="highest-heading">{ (isPersonalBest === true)? 'Personal Best':'' }</div>
@@ -46,7 +45,10 @@ const GameModule = ({startgame, gameWord, onWordChange, inputValue, timervalue, 
             {wordCharacters.map((char, i) => {
               let color;
               if (i < inputValue.length) {
-                color = char === userInputCharacters[i] ? '#54ba18' : '#445298';
+                if(char === userInputCharacters[i].toUpperCase())
+                    color ='#069a0b';
+                else
+                    color ='#680bcc';
               }
               return (
                 <span key={i} style={{ color: color }}>

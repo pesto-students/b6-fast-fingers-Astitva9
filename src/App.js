@@ -141,6 +141,8 @@ function App() {
       generateWordDifficultyWise();
       
     }
+
+    return () => {}
    
   },[timerValue])
 

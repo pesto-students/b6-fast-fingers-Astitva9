@@ -51,7 +51,7 @@ const CountDownTimer= ({
   
         if (timeLeft <= 0) {
           clearInterval(timerId.current);
-          startgame(false);
+          // startgame(false);
         }
         setCircleDasharray();
         getScore(timeLeft)
@@ -66,6 +66,8 @@ const CountDownTimer= ({
   
       return () => {
         clearInterval(timerId.current);
+        setTimeToBeShown();
+        setStrokeDashArray('283');
       };
     
     // eslint-disable-next-line react-hooks/exhaustive-deps
