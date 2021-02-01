@@ -11,7 +11,7 @@ function App() {
 
   const [formData, setFormData] = useState({
     userName:'',
-    difficultyLevel: "Easy"
+    difficultyLevel: ""
   });
 
   const [gameStarted, setGameStarted] = useState(false)
@@ -100,7 +100,7 @@ function App() {
 
   useEffect( () => {
 
-    if(localStorage.userName){
+    if(localStorage.userName && localStorage.difficultyLevel && gameStarted === true){
 
       setFormData({ 
         userName : localStorage.userName,
@@ -134,7 +134,7 @@ function App() {
           setTimerValue(maxTimeForWord);
         else
           setTimerValue(2);
-
+       
         setGameWord(newWord);
       }
            
@@ -144,9 +144,8 @@ function App() {
 
     return () => {}
    
-  },[timerValue])
+  },[gameStarted, timerValue])
 
-  
 
   const getNewWord = async(_difficultyFactor,wordArray) => {
     if (_difficultyFactor >= 1.5 && _difficultyFactor < 2) {
@@ -175,9 +174,9 @@ function App() {
       setDifficultyFactor(_difficultyFactor);
 
       let level;
-      if (_difficultyFactor >= 2) level = 'hard';
-      else if (_difficultyFactor < 1.5) level = 'easy';
-      else level = 'medium';
+      if (_difficultyFactor >= 1 && _difficultyFactor < 1.5) level = 'Easy';
+      else if (_difficultyFactor >= 1.5 && _difficultyFactor < 2) level = 'Medium';
+      else level = 'Hard';
 
       localStorage.setItem('difficultyLevel', level);
 

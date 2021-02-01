@@ -43,6 +43,7 @@ const WelcomeScreen = ({submitUserData, onchange, formData}) => {
                                 onChange={onchange}
                                 required={true}
                             >
+                                <option value="">Select Difficulty Level</option>
                                 <option value="Easy">Easy</option>
                                 <option value="Medium">Medium</option>
                                 <option value="Hard">Hard</option>

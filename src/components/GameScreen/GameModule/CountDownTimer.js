@@ -54,7 +54,7 @@ const CountDownTimer= ({
           startgame(false);
         }
         setCircleDasharray();
-        getScore(timeLeft)
+        getScore(timePassed)
         setTimeToBeShown(formatTimeLeft(timeLeft));
       }, 100);
     }
