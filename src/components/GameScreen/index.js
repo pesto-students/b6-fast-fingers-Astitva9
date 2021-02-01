@@ -5,16 +5,12 @@ import GameModule from './GameModule';
 import ExitModule from './ExitModule';
 import './index.css';
 
-const GameScreen = ({mainGameStarted, gameWord, onWordChange, inputValue, timerValue, resetGame, getScore, scoreArray, stopMainGame}) => {
+const GameScreen = ({mainGameStarted, gameWord, onWordChange, inputValue, timerValue, resetGame, getScore, scoreArray, stopMainGame, setCurrentTotalScore, currentTotalScore, playAgainOnclick, totalScoreArray}) => {
 
     
     let mainModule = '';
 
     const [singleGameStarted, setSingleGameStarted] = useState(true)
-
-    const [currentTotalScore, setCurrentTotalScore] = useState(0);
-
-    const [totalScoreArray, setTotalScoreArray] = useState([]);
 
     useEffect(() => {
         let totalScore = scoreArray.reduce((a, b) => a + b,0)
@@ -23,20 +19,8 @@ const GameScreen = ({mainGameStarted, gameWord, onWordChange, inputValue, timerV
         return () => {
             setCurrentTotalScore(0);
         }
-    }, [scoreArray])
+    }, [scoreArray, setCurrentTotalScore])
 
-    //console.log({currentTotalScore});
-
-    const playAgainOnclick = (currentScore) =>{
-
-        console.log({currentScore});
-        setCurrentTotalScore(0);
-
-        setTotalScoreArray([...totalScoreArray, currentScore])
-
-    }
-
-    console.log({totalScoreArray});
 
     if(singleGameStarted)
         mainModule = <GameModule 

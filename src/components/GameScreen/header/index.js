@@ -19,12 +19,7 @@ const Header = ({currentTotalScore}) => {
         return () => {
             setCurrentScore(0);
         }
-    }, [currentTotalScore])
-
-    console.log({currentTotalScore});
-
-    console.log({currentScore});
-    
+    }, [currentTotalScore]);
 
     return (
         <Row>

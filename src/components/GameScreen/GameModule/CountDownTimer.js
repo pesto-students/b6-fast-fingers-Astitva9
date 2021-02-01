@@ -19,8 +19,6 @@ const CountDownTimer= ({
   getScore
 }) => {
 
-  //console.log(` received time ${timeLimit}`);
-
     const timerId = useRef();
     const pathRef = useRef();
     const [timeToBeShown, setTimeToBeShown] = useState(formatTimeLeft(timeLimit));
@@ -41,18 +39,10 @@ const CountDownTimer= ({
       ).toFixed(0)} 283`;
       setStrokeDashArray(circleDasharray);
     }
-    
-    // console.log(calculateTimeFraction());
-  
+        
     function startTimer() {
       timerId.current = setInterval(() => {
         ms += 1;
-  
-        // if (timeLeft <= 0) {
-        //   clearInterval(timerId.current);
-        //   //startgame(false);
-        // }
-  
         if (ms >= 10) {
           timePassed += 1;
           timeLeft = timeLimit - timePassed;
@@ -72,16 +62,14 @@ const CountDownTimer= ({
 
     useEffect(() => {
   
-      //console.log('useEffect called-------');
       startTimer();
   
       return () => {
         clearInterval(timerId.current);
       };
+    
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentWord]);
-
-  //console.log(` timerValue time ${timeToBeShown}`);
   
 
     return (

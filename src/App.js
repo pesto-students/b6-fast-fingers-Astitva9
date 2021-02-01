@@ -27,6 +27,11 @@ function App() {
   const [inputValue, setInputValue] = useState('');
 
   const [scoreArray, setTheScoreArray] = useState([]);
+
+  const [currentTotalScore, setCurrentTotalScore] = useState(0);
+
+  const [totalScoreArray, setTotalScoreArray] = useState([]);
+
   
 
   const onchange = (event) => {
@@ -40,8 +45,6 @@ function App() {
         localStorage.setItem('userName', formData.userName);
         localStorage.setItem('difficultyLevel', formData.difficultyLevel);
         setGameStarted(true);
-      }else{
-        
       }
       
   }
@@ -67,11 +70,8 @@ function App() {
 
     setInputValue('');
 
-    console.log({maxTimeForWord});
-
     setTimerValue(maxTimeForWord);
 
-    console.log({newWord});
     setGameWord(newWord);
   }
 
@@ -99,7 +99,7 @@ function App() {
  
 
   useEffect( () => {
-    // console.log(localStorage.userName);
+
     if(localStorage.userName){
 
       setFormData({ 
@@ -130,24 +130,18 @@ function App() {
         
         let maxTimeForWord = Math.max(timeForWord, 2);
 
-        // console.log({maxTimeForWord});
         if(maxTimeForWord >= 2)
           setTimerValue(maxTimeForWord);
         else
           setTimerValue(2);
 
-        // console.log({newWord});
         setGameWord(newWord);
       }
            
       generateWordDifficultyWise();
       
     }
-    return () => {
-      
-     
-
-    }
+   
   },[timerValue])
 
   
@@ -187,23 +181,32 @@ function App() {
 
       resetGame();
 
-      //console.log({currentTimerValue});
-
       setTheScoreArray([...scoreArray, currentTimerValue]);
 
     }
     setInputValue(e.target.value);
   }
-
   
-  console.log({scoreArray});
-
   const stopMainGame = async (e) => {
     e.persist();
+    setCurrentTotalScore(0)
     setGameStarted(false);
     resetGame();
     setDifficultyFactor(1);
+    setTheScoreArray([]);
+    setTotalScoreArray([]);
+  
   }
+
+  const playAgainOnclick = (currentScore) =>{
+
+    setCurrentTotalScore(0);
+
+    setTheScoreArray([]);
+
+    setTotalScoreArray([...totalScoreArray, currentScore])
+
+}
   
 
   let ScreenComponent = '';
@@ -221,6 +224,10 @@ function App() {
                       getScore={getScore}
                       scoreArray={scoreArray}
                       stopMainGame={stopMainGame}
+                      setCurrentTotalScore={setCurrentTotalScore}
+                      currentTotalScore={currentTotalScore}
+                      playAgainOnclick={playAgainOnclick}
+                      totalScoreArray={totalScoreArray}
                     />
 
   return (
