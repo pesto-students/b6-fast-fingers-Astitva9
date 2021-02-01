@@ -23,7 +23,7 @@ const ExitModule = ({startGame, resetGame, currentTotalScore, playAgainOnclick})
         <div className="text-center exit-main-block">
             <Row>
                 <Col>
-                    <h2>SCORE : GAME 5</h2>
+                    <h2>GAME SCORE</h2>
                 </Col>
             </Row>
             
