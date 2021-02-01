@@ -1,12 +1,9 @@
 import React from 'react';
 import { Row, Col} from 'react-bootstrap';
 
-const Footer = ({mainGameStarted, resetGame}) => {
+const Footer = ({stopMainGame}) => {
 
-    const stopMainGame = () => {
-        resetGame();
-        mainGameStarted(false);
-    }
+    
 
     return (
         <Row className="footer">

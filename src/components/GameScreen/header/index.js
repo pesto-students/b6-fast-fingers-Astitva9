@@ -1,4 +1,4 @@
-import React,{useEffect, useState} from 'react';
+import React,{useState,useEffect} from 'react';
 import { Row, Col} from 'react-bootstrap';
 function formatTimeLeft(time) {
     const minutes = Math.floor(time / 60);
@@ -10,19 +10,21 @@ function formatTimeLeft(time) {
   
     return `${minutes}:${seconds}`;
   }
-const Header = ({scoreArray}) => {
+const Header = ({currentTotalScore}) => {
 
-
-    const [currentTotalScore, setCurrentTotalScore] = useState('0:00');
+    const [currentScore, setCurrentScore] = useState(0);
 
     useEffect(() => {
-        let totalScore = scoreArray.reduce((a, b) => a + b,0)
-
-        setCurrentTotalScore(formatTimeLeft(totalScore))
+        setCurrentScore(currentTotalScore);
         return () => {
-            setCurrentTotalScore('0:00');
+            setCurrentScore(0);
         }
-    }, [scoreArray])
+    }, [currentTotalScore])
+
+    console.log({currentTotalScore});
+
+    console.log({currentScore});
+    
 
     return (
         <Row>
@@ -30,12 +32,12 @@ const Header = ({scoreArray}) => {
             
                 <h3 className="top-heading-1">
                     <img src={require('../../../assets/images/user-icon.png')} alt="User Icon" className="user-icon" />
-                    {localStorage.userName}
+                    {localStorage.userName.toUpperCase()}
                 </h3>
 
                 <h4 className="top-heading-2">
                     <img src={require('../../../assets/images/game-console.png')} alt="Level Icon" className="level-icon" />
-                    {localStorage.difficultyLevel}
+                    {localStorage.difficultyLevel.toUpperCase()}
                 </h4>
             
             </Col>
@@ -46,7 +48,7 @@ const Header = ({scoreArray}) => {
                 </h3>
 
                 <h4 className="top-heading-2">
-                    SCORE : {currentTotalScore}
+                    SCORE : {formatTimeLeft(currentScore)}
                 </h4>
             
             </Col>

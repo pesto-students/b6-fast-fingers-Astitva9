@@ -27,7 +27,7 @@ function App() {
   const [inputValue, setInputValue] = useState('');
 
   const [scoreArray, setTheScoreArray] = useState([]);
-
+  
 
   const onchange = (event) => {
       setFormData({ ...formData, [event.target.name]: event.target.value });
@@ -197,6 +197,13 @@ function App() {
 
   
   console.log({scoreArray});
+
+  const stopMainGame = async (e) => {
+    e.persist();
+    setGameStarted(false);
+    resetGame();
+    setDifficultyFactor(1);
+  }
   
 
   let ScreenComponent = '';
@@ -213,6 +220,7 @@ function App() {
                       resetGame={resetGame}
                       getScore={getScore}
                       scoreArray={scoreArray}
+                      stopMainGame={stopMainGame}
                     />
 
   return (

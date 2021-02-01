@@ -1,12 +1,22 @@
 import React from 'react';
 import { Row, Col} from 'react-bootstrap';
 import '../index.css';
-
-const ExitModule = ({startGame, resetGame, scoreArray}) => {
+function formatTimeLeft(time) {
+    const minutes = Math.floor(time / 60);
+    let seconds = time % 60;
+  
+    if (seconds < 10) {
+      seconds = `0${seconds}`;
+    }
+  
+    return `${minutes}:${seconds}`;
+  }
+const ExitModule = ({startGame, resetGame, currentTotalScore, playAgainOnclick}) => {
 
     const startNewGame = () => {
         resetGame();
         startGame(true);
+        playAgainOnclick(currentTotalScore);
     }
 
     return (
@@ -19,7 +29,7 @@ const ExitModule = ({startGame, resetGame, scoreArray}) => {
             
             <Row>
                 <Col>
-                    <h1 className="high-score">2:17</h1>
+                    <h1 className="high-score">{formatTimeLeft(currentTotalScore)}</h1>
                 </Col>
             </Row>
             <Row>

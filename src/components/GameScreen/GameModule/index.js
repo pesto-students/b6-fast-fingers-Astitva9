@@ -2,7 +2,41 @@ import React from 'react';
 import { Row, Col} from 'react-bootstrap';
 import CountDownTimer from './CountDownTimer';
 import '../index.css';
-const GameModule = ({startgame, gameWord, onWordChange, inputValue, timervalue, getScore}) => {
+
+function formatTimeLeft(time) {
+    const minutes = Math.floor(time / 60);
+    let seconds = time % 60;
+  
+    if (seconds < 10) {
+      seconds = `0${seconds}`;
+    }
+  
+    return `${minutes}:${seconds}`;
+}
+const GameModule = ({startgame, gameWord, onWordChange, inputValue, timervalue, getScore, totalScoreArray}) => {
+
+    let scorePanel ='';
+    if(totalScoreArray.length>0){
+      
+        scorePanel = totalScoreArray.map((singleScore, index) =>{
+            console.log(Math.max(...totalScoreArray));
+            console.log({singleScore});
+            let isPersonalBest = false
+            if(Math.max(...totalScoreArray) === singleScore){
+                isPersonalBest=true;
+
+            }
+            console.log({isPersonalBest});
+            return (
+                <div className="score-div">
+                    <div className="highest-heading">{ (isPersonalBest === true)? 'Personal Best':'' }</div>
+                    <p className="white-heading">Game {index} : {formatTimeLeft(singleScore)}</p>
+                </div>
+            )
+        })
+    }
+   
+
 
     const getCurrentWordComponent = () => {
         const wordCharacters = gameWord.split('');
@@ -23,7 +57,7 @@ const GameModule = ({startgame, gameWord, onWordChange, inputValue, timervalue, 
           </div>
         );
       };
-
+    
 
     return (
         <Row className="gm-main-row">
@@ -36,21 +70,7 @@ const GameModule = ({startgame, gameWord, onWordChange, inputValue, timervalue, 
                         </Row>
 
                         <Row>
-                            <div className="score-div">
-                                <p className="highest-heading"></p>
-                                <p className="white-heading">Game 1 : 00:09</p>
-                                
-                            </div>
-                            <div className="score-div">
-                                <div className="highest-heading">Personal Best</div>
-                                <p className="white-heading">Game 2 : 00:09</p>
-                                
-                            </div>
-                            <div className="score-div">
-                                <p className="highest-heading"></p>
-                                <p className="white-heading">Game 3 : 00:09</p>
-                                
-                            </div>
+                            {scorePanel}
                         </Row>
                     </div>
                 </div>

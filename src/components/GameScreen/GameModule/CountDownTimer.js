@@ -61,7 +61,7 @@ const CountDownTimer= ({
   
         if (timeLeft <= 0) {
           clearInterval(timerId.current);
-          // startgame(false);
+          startgame(false);
         }
         setCircleDasharray();
         getScore(timeLeft)
@@ -86,7 +86,7 @@ const CountDownTimer= ({
 
     return (
       <div className="timerContainer">
-        <div className="base-timer">
+        <div className="base-timer text-center">
         <svg
           className="base-timer__svg"
           viewBox="0 0 100 100"
