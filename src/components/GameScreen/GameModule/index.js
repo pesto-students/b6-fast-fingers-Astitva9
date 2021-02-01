@@ -2,9 +2,8 @@ import React from 'react';
 import { Row, Col} from 'react-bootstrap';
 import CountDownTimer from './CountDownTimer';
 import '../index.css';
-const GameModule = ({startgame, gameWord, onWordChange, inputValue, timervalue}) => {
+const GameModule = ({startgame, gameWord, onWordChange, inputValue, timervalue, getScore}) => {
 
-    
     const getCurrentWordComponent = () => {
         const wordCharacters = gameWord.split('');
         const userInputCharacters = inputValue.split('');
@@ -24,6 +23,7 @@ const GameModule = ({startgame, gameWord, onWordChange, inputValue, timervalue})
           </div>
         );
       };
+
 
     return (
         <Row className="gm-main-row">
@@ -57,10 +57,13 @@ const GameModule = ({startgame, gameWord, onWordChange, inputValue, timervalue})
             </Col>
             <Col sm={6} className="game-block text-center">
                 <Row>
-                    <Col><CountDownTimer 
+                    <Col>
+                        <CountDownTimer 
                             startgame={startgame}
-                            remainingtime={timervalue}
-                            />
+                            timeLimit={timervalue}
+                            currentWord={gameWord}
+                            getScore={getScore}
+                        />
                     </Col>
                 </Row>
                 <Row>

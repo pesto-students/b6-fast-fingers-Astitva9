@@ -18,18 +18,20 @@ function App() {
 
   const [difficultyFactor, setDifficultyFactor] = useState(1);
 
-  const [timerValue, setTimerValue] = useState(0)
+  const [timerValue, setTimerValue] = useState(0);
 
+  const [currentTimerValue, setCurrentTimerValue] = useState(0);
 
+  const [gameWord, setGameWord] = useState('PESTO');
 
-  const [gameWord, setGameWord] = useState('PESTO')
+  const [inputValue, setInputValue] = useState('');
+
+  const [scoreArray, setTheScoreArray] = useState([]);
 
 
   const onchange = (event) => {
       setFormData({ ...formData, [event.target.name]: event.target.value });
   }
-
-  const [inputValue, setInputValue] = useState('');
 
   const submitUserData = (event) =>{
       event.preventDefault();
@@ -46,7 +48,7 @@ function App() {
 
   const resetGame = async () => {
     const [ _easyWords, _mediumWords, _hardWords] = getWordFromDictionary();
-    setInputValue('');
+    
     let newWord = null;
     let timeForWord = 0;
     if(localStorage.difficultyLevel === 'Medium'){
@@ -62,6 +64,8 @@ function App() {
       timeForWord = Math.round(newWord.length / difficultyFactor);
     }
     let maxTimeForWord = Math.max(timeForWord, 2);
+
+    setInputValue('');
 
     console.log({maxTimeForWord});
 
@@ -126,11 +130,13 @@ function App() {
         
         let maxTimeForWord = Math.max(timeForWord, 2);
 
-        console.log({maxTimeForWord});
+        // console.log({maxTimeForWord});
+        if(maxTimeForWord >= 2)
+          setTimerValue(maxTimeForWord);
+        else
+          setTimerValue(2);
 
-        setTimerValue(maxTimeForWord);
-       
-        console.log({newWord});
+        // console.log({newWord});
         setGameWord(newWord);
       }
            
@@ -142,7 +148,7 @@ function App() {
      
 
     }
-  },[])
+  },[timerValue])
 
   
 
@@ -159,15 +165,38 @@ function App() {
     return wordArray[random].toUpperCase();
   };
 
+  const getScore = (currentTimerValue) => {
+    setCurrentTimerValue(currentTimerValue);
+  }
+
   const onWordChange = (e) =>{
     e.persist();
     if(e.target.value.toUpperCase() === gameWord){
       console.log("Word matched");
-      //resetGame();
+      //Increase the difficulty factor by  0.01 on success
+      const _difficultyFactor = difficultyFactor + 0.01;
+
+      setDifficultyFactor(_difficultyFactor);
+
+      let level;
+      if (_difficultyFactor >= 2) level = 'hard';
+      else if (_difficultyFactor < 1.5) level = 'easy';
+      else level = 'medium';
+
+      localStorage.setItem('difficultyLevel', level);
+
+      resetGame();
+
+      //console.log({currentTimerValue});
+
+      setTheScoreArray([...scoreArray, currentTimerValue]);
+
     }
     setInputValue(e.target.value);
   }
 
+  
+  console.log({scoreArray});
   
 
   let ScreenComponent = '';
@@ -182,12 +211,13 @@ function App() {
                       inputValue={inputValue}
                       timerValue={timerValue}
                       resetGame={resetGame}
+                      getScore={getScore}
+                      scoreArray={scoreArray}
                     />
 
   return (
     <Container fluid>
       {ScreenComponent}
-      
     </Container> 
   );
 }

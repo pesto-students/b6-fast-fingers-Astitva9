@@ -1,10 +1,17 @@
-import React, { useRef, useState} from "react";
+import React, { useRef, useState, useCallback} from "react";
 
 const RenderTime = ({ startgame, remainingTime }) => {
     const currentTime = useRef(remainingTime);
     const prevTime = useRef(null);
     const isNewTimeFirstTick = useRef(false);
     const [, setOneLastRerender] = useState(0);
+
+    //console.log({currentTime});
+    useCallback(() => {
+      console.log('called on time',remainingTime);
+      currentTime.current = remainingTime;
+     
+    }, [remainingTime])
   
     if (currentTime.current !== remainingTime) {
       isNewTimeFirstTick.current = true;
@@ -18,7 +25,7 @@ const RenderTime = ({ startgame, remainingTime }) => {
     if (remainingTime === 0) {
       setTimeout(() => {
         setOneLastRerender(val => val + 1);
-        startgame(false)
+        //startgame(false)
       }, 20);
     }
   

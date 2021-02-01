@@ -1,7 +1,28 @@
-import React from 'react';
+import React,{useEffect, useState} from 'react';
 import { Row, Col} from 'react-bootstrap';
+function formatTimeLeft(time) {
+    const minutes = Math.floor(time / 60);
+    let seconds = time % 60;
+  
+    if (seconds < 10) {
+      seconds = `0${seconds}`;
+    }
+  
+    return `${minutes}:${seconds}`;
+  }
+const Header = ({scoreArray}) => {
 
-const Header = () => {
+
+    const [currentTotalScore, setCurrentTotalScore] = useState('0:00');
+
+    useEffect(() => {
+        let totalScore = scoreArray.reduce((a, b) => a + b,0)
+
+        setCurrentTotalScore(formatTimeLeft(totalScore))
+        return () => {
+            setCurrentTotalScore('0:00');
+        }
+    }, [scoreArray])
 
     return (
         <Row>
@@ -25,7 +46,7 @@ const Header = () => {
                 </h3>
 
                 <h4 className="top-heading-2">
-                    SCORE : 00:99
+                    SCORE : {currentTotalScore}
                 </h4>
             
             </Col>
